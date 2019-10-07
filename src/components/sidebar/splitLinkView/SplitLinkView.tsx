@@ -18,6 +18,7 @@ import Loader from '~/components/shared/loader/Loader';
 import { Button } from '~/components/controls';
 import ButtonType from '~/enums/buttonType';
 import { AlertStore, AlertType } from '~/stores/alertStore';
+import LinkFactory from '~/factories/linkFactory';
 import SidebarHeader from '../SidebarHeader';
 import InputContainer from '../../controls/InputContainer';
 import RoutePathSelector from './RoutePathSelector';
@@ -166,13 +167,23 @@ class SplitLinkView extends React.Component<
     };
 
     private save = () => {
+        const startNode = this.props.linkStore!.link.startNode;
+        const endNode = this.props.linkStore!.link.endNode;
+        const intermediateNode = this.props.linkStore!.nodes[0];
+        const startLink = LinkFactory.createNewLink(
+            startNode,
+            intermediateNode
+        );
+        const endLink = LinkFactory.createNewLink(intermediateNode, endNode);
+        endLink.transitType = this.props.linkStore!.link.transitType;
+        startLink.transitType = this.props.linkStore!.link.transitType;
         // tslint:disable-next-line
-        console.log({
-            routePaths: this.getRoutepathsBeingSplit(),
-            date: this.state.selectedDate,
-            link: this.props.linkStore!.link,
-            node: this.props.linkStore!.nodes[0]
-        });
+        LinkService.createLinksBySplitting(
+            this.props.linkStore!.link,
+            this.props.linkStore!.nodes[0],
+            this.state.selectedDate!,
+            [startLink, endLink]
+        );
         this.props.alertStore!.setFadeMessage(
             'Linkin jaon kehitys kesken.',
             AlertType.Info

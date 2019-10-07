@@ -6,6 +6,7 @@ import { LatLng } from 'leaflet';
 import endpoints from '~/enums/endpoints';
 import LinkFactory from '~/factories/linkFactory';
 import IExternalLink from '~/models/externals/IExternalLink';
+import { INode } from '~/models';
 import GraphqlQueries from './graphqlQueries';
 
 class LinkService {
@@ -64,6 +65,18 @@ class LinkService {
         await ApiClient.createObject(endpoints.LINK, link);
         await apolloClient.clearStore();
     };
+
+    public static createLinksBySplitting = async (link: ILink, node: INode, date: Date, newLinks: ILink[]) => {
+        const requestBody = {
+            link,
+            node,
+            date,
+            newLinks
+        };
+        console.log(endpoints.SPLIT_LINK, requestBody);
+        await ApiClient.createObject(endpoints.SPLIT_LINK, requestBody);
+        await apolloClient.clearStore();
+    }
 }
 
 export default LinkService;
