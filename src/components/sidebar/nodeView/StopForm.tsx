@@ -175,6 +175,16 @@ class StopForm extends ViewFormBase<IStopFormProps, IStopFormState> {
         this.props.nodeStore!.updateStop(property, value);
     };
 
+    private updateTransitType = (newValue: string) => {
+        const currentValue = this.props.nodeStore!.node!.stop!.transitType;
+        if (currentValue === newValue) {
+            // Deselect current value
+            this.updateStopProperty('transitType')(null);
+        } else {
+            this.updateStopProperty('transitType')(newValue);
+        }
+    };
+
     private getShortIdLetterItems = () => {
         const shortIdLetterItems = this.props.codeListStore!.getDropdownItemList('Lyhyttunnus');
         shortIdLetterItems.forEach(item => (item.label = `${item.value} - ${item.label}`));
@@ -215,9 +225,7 @@ class StopForm extends ViewFormBase<IStopFormProps, IStopFormState> {
                                     selectedTransitTypes={
                                         stop.transitType ? [stop.transitType] : []
                                     }
-                                    toggleSelectedTransitType={this.updateStopProperty(
-                                        'transitType'
-                                    )}
+                                    toggleSelectedTransitType={this.updateTransitType}
                                 />
                             </div>
                         </div>
