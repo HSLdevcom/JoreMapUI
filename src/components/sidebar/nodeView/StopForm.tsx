@@ -8,11 +8,13 @@ import InputContainer from '~/components/controls/InputContainer';
 import TextContainer from '~/components/controls/TextContainer';
 import ViewFormBase from '~/components/shared/inheritedComponents/ViewFormBase';
 import ButtonType from '~/enums/buttonType';
+import TransitType from '~/enums/transitType';
 import { INode, IStop } from '~/models';
 import stopValidationModel from '~/models/validationModels/stopValidationModel';
 import navigator from '~/routing/navigator';
 import RouteBuilder from '~/routing/routeBuilder';
 import SubSites from '~/routing/subSites';
+import NodeService from '~/services/nodeService';
 import StopAreaService, { IStopAreaItem } from '~/services/stopAreaService';
 import StopService, { IStopSectionItem } from '~/services/stopService';
 import { CodeListStore } from '~/stores/codeListStore';
@@ -175,13 +177,15 @@ class StopForm extends ViewFormBase<IStopFormProps, IStopFormState> {
         this.props.nodeStore!.updateStop(property, value);
     };
 
-    private updateTransitType = (newValue: string) => {
-        const currentValue = this.props.nodeStore!.node!.stop!.transitType;
+    private updateTransitType = (newValue: TransitType) => {
+        const node = this.props.nodeStore!.node;
+        const currentValue = node!.stop!.transitType;
         if (currentValue === newValue) {
             // Deselect current value
             this.updateStopProperty('transitType')(null);
         } else {
             this.updateStopProperty('transitType')(newValue);
+            NodeService.getGeneratedNodeId(newValue, node.coordinates);
         }
     };
 
@@ -218,17 +222,30 @@ class StopForm extends ViewFormBase<IStopFormProps, IStopFormState> {
                 </SidebarHeader>
                 <div className={s.formSection}>
                     {this.props.isNewStop && (
-                        <div className={s.flexRow}>
-                            <div className={s.formItem}>
-                                <div className={s.inputLabel}>VERKKO</div>
-                                <TransitToggleButtonBar
-                                    selectedTransitTypes={
-                                        stop.transitType ? [stop.transitType] : []
-                                    }
-                                    toggleSelectedTransitType={this.updateTransitType}
-                                />
+                        <>
+                            <div className={s.flexRow}>
+                                <div className={s.formItem}>
+                                    <div className={s.inputLabel}>VERKKO</div>
+                                    <TransitToggleButtonBar
+                                        selectedTransitTypes={
+                                            stop.transitType ? [stop.transitType] : []
+                                        }
+                                        toggleSelectedTransitType={this.updateTransitType}
+                                    />
+                                </div>
                             </div>
-                        </div>
+                            <div className={s.flexRow}>
+                                <div className={s.formItem}>
+                                    <InputContainer
+                                        label='SOLMUN TUNNUS'
+                                        disabled={isEditingDisabled}
+                                        value={stop.nodeId}
+                                        onChange={onChange('nodeId')}
+                                        validationResult={invalidPropertiesMap['nodeId']}
+                                    />
+                                </div>
+                            </div>
+                        </>
                     )}
                     <div className={s.flexRow}>
                         <Dropdown

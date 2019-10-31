@@ -7,6 +7,8 @@ enum QueryParams {
     showItem = 'showItem',
     direction = 'direction',
     node = 'node',
+    transitType = 'transitType',
+    latLng = 'latLng',
     code = 'code'
 }
 

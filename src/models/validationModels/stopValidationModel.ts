@@ -11,7 +11,7 @@ type StopKeys = keyof IStop;
 type IStopValidationModel = { [key in StopKeys]: string };
 
 const stopValidationModel: IStopValidationModel = {
-    nodeId: '',
+    nodeId: 'required|min:7|max:7|string',
     municipality: 'required|min:1|max:3|string',
     nameFi: nameRule,
     nameSw: nameRule,

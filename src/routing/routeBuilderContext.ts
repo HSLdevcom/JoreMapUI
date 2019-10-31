@@ -1,4 +1,5 @@
 import qs from 'qs';
+import endpoints from '~/enums/endpoints';
 import QueryParams from './queryParams';
 import SubSites from './subSites';
 
@@ -7,7 +8,7 @@ class RouteBuilderContext {
     private linkToBuild: string;
     private queryValues: Object;
 
-    constructor(currentLink: string, linkToBuild: SubSites, queryValues: any) {
+    constructor(currentLink: string, linkToBuild: SubSites | endpoints, queryValues: any) {
         this.currentLink = currentLink;
         this.linkToBuild = linkToBuild;
         this.queryValues = this.jsonCopy(queryValues);

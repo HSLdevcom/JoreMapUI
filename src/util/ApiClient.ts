@@ -22,28 +22,23 @@ interface IAuthorizationRequest {
 type credentials = 'include';
 
 class ApiClient {
-    public updateObject = async (entityName: endpoints, object: any) => {
-        const response = this.postRequest(entityName, object);
+    public updateObject = async (endpoint: endpoints, object: any) => {
+        const response = this.postRequest(endpoint, object);
         ApolloClient.clearStore();
         return response;
     };
 
-    public createObject = async (entityName: endpoints, object: any) => {
-        const response = await this.sendBackendRequest(RequestMethod.PUT, entityName, object);
+    public createObject = async (endpoint: endpoints, object: any) => {
+        const response = await this.sendBackendRequest(RequestMethod.PUT, endpoint, object);
         ApolloClient.clearStore();
         return response;
     };
 
-    public deleteObject = async (entityName: endpoints, object: any) => {
-        return await this.sendBackendRequest(RequestMethod.DELETE, entityName, object);
+    public deleteObject = async (endpoint: endpoints, object: any) => {
+        return await this.sendBackendRequest(RequestMethod.DELETE, endpoint, object);
     };
 
-    public authorizeUsingCode = async (code: string) => {
-        const requestBody: IAuthorizationRequest = { code };
-        return await this.sendBackendRequest(RequestMethod.POST, endpoints.AUTH, requestBody);
-    };
-
-    public getRequest = async (endpoint: endpoints) => {
+    public getRequest = async (endpoint: endpoints | string) => {
         return await this.sendBackendRequest(RequestMethod.GET, endpoint, {});
     };
 
@@ -51,9 +46,14 @@ class ApiClient {
         return await this.sendBackendRequest(RequestMethod.POST, endpoint, requestBody);
     };
 
+    public authorizeUsingCode = async (code: string) => {
+        const requestBody: IAuthorizationRequest = { code };
+        return await this.sendBackendRequest(RequestMethod.POST, endpoints.AUTH, requestBody);
+    };
+
     private sendBackendRequest = async (
         method: RequestMethod,
-        endpoint: endpoints,
+        endpoint: endpoints | string,
         object: any
     ) => {
         const entityUrl = `${constants.API_URL}/${endpoint}`;
