@@ -18,9 +18,11 @@ class CopyRoutePathStore {
     @observable private _routePathsToCopy: IRoutePathToCopy[];
     @observable private _storedRouteListRoutePaths: IRoutePath[] | null;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this.clear();
-    }
+    };
 
     @computed
     get lineId() {

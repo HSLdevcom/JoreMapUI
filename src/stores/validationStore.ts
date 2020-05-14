@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { observable } from 'mobx';
+import { action, observable } from 'mobx';
 import FormValidator, { IValidationResult } from '~/validation/FormValidator';
 
 interface ICustomValidatorObject {
@@ -27,6 +27,10 @@ class ValidationStore<ValidationObject, ValidationModel> {
     private _validationModel: ValidationModel | null;
     private _customValidatorMap: ICustomValidatorMap | null;
     private _hasValidatedAllProperties: boolean;
+
+    // Constructor
+    @action
+    public initialize = () => {};
 
     public init = (
         validationObject: ValidationObject,

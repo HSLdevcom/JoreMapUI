@@ -58,7 +58,9 @@ class RoutePathStore {
         ValidationStore<IRoutePathLink, IRoutePathLinkValidationModel>
     >;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._neighborRoutePathLinks = [];
         this._listFilters = [ListFilter.link];
         this._invalidLinkOrderNumbers = [];
@@ -76,7 +78,7 @@ class RoutePathStore {
             (value: boolean) => NavigationStore.setShouldShowUnsavedChangesPrompt(value)
         );
         reaction(() => this._isEditingDisabled, this.onChangeIsEditingDisabled);
-    }
+    };
 
     @computed
     get routePath(): IRoutePath | null {

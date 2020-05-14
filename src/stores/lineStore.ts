@@ -3,7 +3,7 @@ import { action, computed, observable, reaction } from 'mobx';
 import { ILine, IRoute } from '~/models';
 import ISearchLine from '~/models/searchModels/ISearchLine';
 import lineValidationModel, {
-    ILineValidationModel
+    ILineValidationModel,
 } from '~/models/validationModels/lineValidationModel';
 import { IValidationResult } from '~/validation/FormValidator';
 import NavigationStore from './navigationStore';
@@ -18,7 +18,9 @@ class LineStore {
     @observable private _existingLines: ISearchLine[] = [];
     private _validationStore: ValidationStore<ILine, ILineValidationModel>;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._isEditingDisabled = true;
         this._validationStore = new ValidationStore();
 
@@ -27,7 +29,7 @@ class LineStore {
             (value: boolean) => NavigationStore.setShouldShowUnsavedChangesPrompt(value)
         );
         reaction(() => this._isEditingDisabled, this.onChangeIsEditingDisabled);
-    }
+    };
 
     @computed
     get line(): ILine | null {
@@ -87,14 +89,14 @@ class LineStore {
                         if (this.isLineAlreadyFound(lineId)) {
                             const validationResult: IValidationResult = {
                                 isValid: false,
-                                errorMessage: `Linja ${lineId} on jo olemassa.`
+                                errorMessage: `Linja ${lineId} on jo olemassa.`,
                             };
                             return validationResult;
                         }
                         return;
-                    }
-                ]
-            }
+                    },
+                ],
+            },
         };
 
         this._validationStore.init(line, lineValidationModel, customValidatorMap);

@@ -11,7 +11,7 @@ import SelectNetworkEntityTool from '~/components/map/tools/SelectNetworkEntityT
 import SplitLinkTool from '~/components/map/tools/SplitLinkTool';
 import ToolbarToolType from '~/enums/toolbarToolType';
 import RoutePathLinkMassEditStore from '~/stores/routePathLinkMassEditStore';
-import { RoutePathStore } from './routePathStore';
+import RoutePathStore from './routePathStore';
 
 const defaultTool = new SelectNetworkEntityTool();
 
@@ -23,11 +23,11 @@ const TOOL_LIST = [
     CopyRoutePathSegmentTool,
     RemoveRoutePathLinkTool,
     PrintTool,
-    SplitLinkTool
+    SplitLinkTool,
 ];
 
 const TOOLS = {};
-TOOL_LIST.forEach(tool => {
+TOOL_LIST.forEach((tool) => {
     const toolInstance = new tool();
     TOOLS[toolInstance.toolType] = toolInstance;
 });
@@ -39,19 +39,17 @@ class ToolbarStore {
     @observable private _disabledTools: ToolbarToolType[];
     @observable private _shouldShowEntityOpenPrompt: boolean;
     @observable private _areUndoButtonsDisabled: boolean;
-    private routePathStore: RoutePathStore;
 
-
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._disabledTools = DEFAULT_DISABLED_TOOLS;
         this.selectDefaultTool();
         this._shouldShowEntityOpenPrompt = false;
         this.initListeners();
-    }
+    };
 
     private initListeners = async () => {
-        // RoutePath store doesn't exist when toolbarStore is initialized, have to wait for its initialization
-        this.routePathStore = (await import('~/stores/routePathStore')).default;
         reaction(
             () =>
                 RoutePathLinkMassEditStore &&
@@ -59,10 +57,10 @@ class ToolbarStore {
             _.debounce(() => this.updateDisabledToolStatus(), 25)
         );
         reaction(
-            () => this.routePathStore?.routePath && this.routePathStore.routePath.routePathLinks.length,
+            () => RoutePathStore.routePath && RoutePathStore.routePath.routePathLinks.length,
             _.debounce(() => this.updateDisabledToolStatus(), 25)
         );
-    }
+    };
 
     @computed
     get selectedTool(): BaseTool | null {
@@ -145,7 +143,7 @@ class ToolbarStore {
             }
         };
         const removeTool = (toolType: ToolbarToolType) => {
-            const toolToRemoveIndex = disabledTools.findIndex(tool => tool === toolType);
+            const toolToRemoveIndex = disabledTools.findIndex((tool) => tool === toolType);
             disabledTools.splice(toolToRemoveIndex, 1);
         };
 
@@ -163,7 +161,7 @@ class ToolbarStore {
 
         this._disabledTools = disabledTools;
 
-        this.setUndoButtonsDisabled(this.areUndoToolsDisabled())
+        this.setUndoButtonsDisabled(this.areUndoToolsDisabled());
     };
 
     public isSelected = (tool: ToolbarToolType): boolean => {
@@ -184,14 +182,14 @@ class ToolbarStore {
 
     private isCopyRoutePathSegmentToolDisabled = () => {
         return (
-            (this.routePathStore.routePath && this.routePathStore.routePath.routePathLinks.length === 0) ||
+            (RoutePathStore.routePath && RoutePathStore.routePath.routePathLinks.length === 0) ||
             RoutePathLinkMassEditStore.selectedMassEditRoutePathLinks.length > 0
         );
     };
 
     private areUndoToolsDisabled = () => {
         return RoutePathLinkMassEditStore.selectedMassEditRoutePathLinks.length > 0;
-    }
+    };
 }
 
 export default new ToolbarStore();

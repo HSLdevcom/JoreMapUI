@@ -14,7 +14,9 @@ class RouteListStore {
     @observable private _lines: ILine[];
     @observable private _routeIdToEdit: string | null;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._routeItems = [];
         this._lines = [];
         this._routeIdToEdit = null;
@@ -23,7 +25,7 @@ class RouteListStore {
             () => this.routeIdToEdit != null,
             (value: boolean) => SearchStore.setIsSearchDisabled(value)
         );
-    }
+    };
 
     @computed
     get routeItems(): IRouteItem[] {

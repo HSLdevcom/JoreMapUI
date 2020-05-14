@@ -6,10 +6,12 @@ class HighlightEntityStore {
     @observable private _nodes: INodeMapHighlight[];
     @observable private _links: ILinkMapHighlight[];
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._nodes = [];
         this._links = [];
-    }
+    };
 
     @computed
     get nodes() {

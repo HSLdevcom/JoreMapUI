@@ -36,7 +36,9 @@ class MapStore {
     @observable private _mapBounds: L.LatLngBounds;
     @observable private _mapCursor: MapCursor;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._coordinates = null;
         this._displayCoordinateSystem = CoordinateSystem.EPSG4326;
         this._zoom = INITIAL_ZOOM;
@@ -44,7 +46,7 @@ class MapStore {
         this._visibleNodeLabels = [NodeLabel.hastusId];
         this._mapFilters = [MapFilter.arrowDecorator];
         this._mapCursor = '';
-    }
+    };
 
     @computed
     get coordinates(): L.LatLng | null {

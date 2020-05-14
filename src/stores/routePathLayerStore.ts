@@ -12,13 +12,15 @@ class RoutePathLayerStore {
     @observable private _selectedRoutePathId: string | null;
     private colorScale: ColorScale;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._routePaths = [];
         this._highlightedRoutePathId = null;
         this._selectedRoutePathId = null;
         this.colorScale = new ColorScale();
         autorun(() => this.centerMapToRoutePaths());
-    }
+    };
 
     @computed
     get routePaths(): IRoutePath[] {

@@ -1,12 +1,15 @@
+import { action } from 'mobx';
 import EventHelper from '~/helpers/EventHelper';
 
 class GeometryUndoStore<UndoObject> {
     private _undoObjects: UndoObject[];
     private _undoIndex: number;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this.clear();
-    }
+    };
 
     public getUndoObjectsLength = () => {
         return this._undoObjects.length;

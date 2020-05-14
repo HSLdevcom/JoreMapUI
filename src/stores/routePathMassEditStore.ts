@@ -15,7 +15,9 @@ class RoutePathMassEditStore {
     @observable private _selectedRoutePath: IRoutePath | null;
     @observable private _selectedRoutePathIdPairs: string[][]; // RoutePath pairs that user has manually selected (shift+click)
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._massEditRoutePaths = null;
         this._newRoutePathIdCounter = 1;
         this._selectedRoutePathIdPairs = [];
@@ -28,7 +30,7 @@ class RoutePathMassEditStore {
             () => this.shouldShowUnsavedChangesPrompt,
             (value: boolean) => this.setNavigationAction(value)
         );
-    }
+    };
 
     @computed
     get massEditRoutePaths(): IMassEditRoutePath[] | null {

@@ -20,9 +20,12 @@ type codeListName =
 
 class CodeListStore {
     @observable private _codeListMap: Map<codeListName, ICodeListItem[]>;
-    constructor() {
+
+    // Constructor
+    @action
+    public initialize = () => {
         this._codeListMap = new Map();
-    }
+    };
 
     @action
     public setCodeListItems(codeListItems: ICodeListItem[]) {
@@ -52,7 +55,7 @@ class CodeListStore {
             return codeListItems.map((codeListItem: ICodeListItem) => {
                 return {
                     value: codeListItem.value,
-                    label: codeListItem.label
+                    label: codeListItem.label,
                 };
             });
         }
@@ -64,7 +67,7 @@ class CodeListStore {
         const codeListItems = this._codeListMap.get(codeListName);
         if (codeListItems) {
             const item = codeListItems.find(
-                item => item.listId === codeListName && item.value === value
+                (item) => item.listId === codeListName && item.value === value
             );
             return item ? item.label : '';
         }

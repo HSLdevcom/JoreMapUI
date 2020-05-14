@@ -67,6 +67,12 @@ const stores = {
     userStore: UserStore,
 };
 
+const storeEntries = Object.entries(stores);
+for (const [storeName] of storeEntries) {
+    // With initialize functions as constructors stores will always exist before being referenced
+    stores[storeName].initialize();
+}
+
 ReactDOM.render(
     <Provider {...stores}>
         <ApolloProvider client={ApolloClient.getClient()}>

@@ -16,10 +16,12 @@ class ConfirmStore {
     private _confirmNotification: string | null;
     private _confirmType: confirmType;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._content = null;
         this._isOpen = false;
-    }
+    };
 
     @computed
     get isOpen(): boolean {
@@ -64,7 +66,7 @@ class ConfirmStore {
         confirmButtonText,
         cancelButtonText,
         confirmNotification,
-        confirmType = 'default'
+        confirmType = 'default',
     }: {
         content: React.ReactNode | string;
         onConfirm: () => void;

@@ -22,12 +22,17 @@ class PopupStore {
     @observable.ref private _popups: IPopup[];
     private _idCounter: number;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._popups = [];
         this._idCounter = 0;
 
-        reaction(() => [NetworkStore.isMapLayerVisible(MapLayer.node)], this.closePopups);
-    }
+        reaction(
+            () => [NetworkStore.visibleMapLayers && NetworkStore.isMapLayerVisible(MapLayer.node)],
+            this.closePopups
+        );
+    };
 
     @computed
     get popups() {
@@ -39,7 +44,7 @@ class PopupStore {
         const id = this._idCounter;
         const popup: IPopup = {
             id,
-            ...popupProps
+            ...popupProps,
         };
         this._idCounter += 1;
         // Need to do concat (instead of push) to trigger observable reaction
@@ -49,7 +54,7 @@ class PopupStore {
 
     @action
     public closePopup = (id: number) => {
-        this._popups = this._popups.filter(p => p.id !== id);
+        this._popups = this._popups.filter((p) => p.id !== id);
         if (this._popups.length === 0) {
             this._idCounter = 0;
         }

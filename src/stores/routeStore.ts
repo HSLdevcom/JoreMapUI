@@ -16,14 +16,16 @@ class RouteStore {
     @observable private _existingRouteIds: string[] = [];
     private _validationStore: ValidationStore<IRoute, IRouteValidationModel>;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._validationStore = new ValidationStore();
 
         reaction(
             () => this.shouldShowUnsavedChangesPrompt,
             (value: boolean) => NavigationStore.setShouldShowUnsavedChangesPrompt(value)
         );
-    }
+    };
 
     @computed
     get route(): IRoute {

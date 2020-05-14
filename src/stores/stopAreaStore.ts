@@ -4,7 +4,7 @@ import TransitType from '~/enums/transitType';
 import { IStopArea } from '~/models';
 import { IStopItem } from '~/models/IStop';
 import stopAreaValidationModel, {
-    IStopAreaValidationModel
+    IStopAreaValidationModel,
 } from '~/models/validationModels/stopAreaValidationModel';
 import NavigationStore from './navigationStore';
 import ValidationStore from './validationStore';
@@ -20,7 +20,9 @@ class StopAreaStore {
     @observable private _isEditingDisabled: boolean;
     private _validationStore: ValidationStore<IStopArea, IStopAreaValidationModel>;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._stopArea = null;
         this._oldStopArea = null;
         this._stopItems = [];
@@ -33,7 +35,7 @@ class StopAreaStore {
             () => this.isDirty && !this._isEditingDisabled,
             (value: boolean) => NavigationStore.setShouldShowUnsavedChangesPrompt(value)
         );
-    }
+    };
 
     @computed
     get stopArea() {
@@ -73,7 +75,7 @@ class StopAreaStore {
     @action
     public init = ({
         stopArea,
-        isNewStopArea
+        isNewStopArea,
     }: {
         stopArea: IStopArea;
         isNewStopArea: boolean;

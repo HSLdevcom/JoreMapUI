@@ -12,7 +12,9 @@ class SearchResultStore {
     @observable private _isSearching: boolean;
     private delayTimer: NodeJS.Timeout;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._allLines = [];
         this._allNodes = [];
         this._filteredItems = [];
@@ -23,11 +25,11 @@ class SearchResultStore {
                 SearchStore.searchInput,
                 SearchStore.selectedTransitTypes,
                 SearchStore.isSearchingForLines,
-                SearchStore.isSearchingForNodes
+                SearchStore.isSearchingForNodes,
             ],
             this.startUpdateTimer
         );
-    }
+    };
 
     @computed
     get allLines(): ISearchLine[] {
@@ -104,7 +106,7 @@ class SearchResultStore {
     };
 
     private getFilteredLines = (searchInput: string, transitTypes: TransitType[]) => {
-        return this._allLines.filter(line => {
+        return this._allLines.filter((line) => {
             // Filter by transitType
             if (!transitTypes.includes(line.transitType)) {
                 return false;
@@ -115,13 +117,13 @@ class SearchResultStore {
 
             // Filter by route.name
             return line.routes
-                .map(route => route.name.toLowerCase())
-                .some(name => this.matchText(name, searchInput.toLowerCase()));
+                .map((route) => route.name.toLowerCase())
+                .some((name) => this.matchText(name, searchInput.toLowerCase()));
         });
     };
 
     private getFilteredNodes = (searchInput: string) => {
-        return this._allNodes.filter(node => {
+        return this._allNodes.filter((node) => {
             const shortId = NodeUtils.getShortId(node);
             return (
                 this.matchText(node.id, searchInput) ||

@@ -173,8 +173,8 @@ class RoutePathLinkMassEditView extends React.Component<
                     <SidebarHeader
                         onCloseButtonClick={this.closeEditing}
                         onBackButtonClick={() => this.setEditMode(null)}
-                        isCloseButtonVisible={editMode === null}
-                        isBackButtonVisible={false}
+                        isCloseButtonVisible={true}
+                        isBackButtonVisible={editMode !== null}
                     >
                         {`Muokkaa valittuja pysäkkejä (${routePathLinks.length})`}
                     </SidebarHeader>

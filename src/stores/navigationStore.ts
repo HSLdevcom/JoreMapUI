@@ -4,10 +4,12 @@ class NavigationStore {
     @observable private _shouldShowPrompt: boolean;
     @observable private _navigationAction: (() => void) | null; // Called when navigation happens. Can be e.g. used to clear store state when user enters home page
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._shouldShowPrompt = false;
         this._navigationAction = null;
-    }
+    };
 
     @computed
     get shouldShowUnsavedChangesPrompt(): boolean {

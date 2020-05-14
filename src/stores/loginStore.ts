@@ -12,9 +12,11 @@ class LoginStore {
     @observable private _isSaveLockEnabled: boolean;
     private saveLockFetchInterval: any;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this.clear(false);
-    }
+    };
 
     @computed
     get isAuthenticated() {

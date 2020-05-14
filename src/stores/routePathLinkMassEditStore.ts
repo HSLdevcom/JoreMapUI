@@ -7,14 +7,16 @@ class RoutePathLinkMassEditStore {
     @observable private _isMassEditSelectionAllowed: boolean;
     @observable private _selectedMassEditRoutePathLinks: IRoutePathLink[];
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._isMassEditSelectionAllowed = false;
         this._selectedMassEditRoutePathLinks = [];
 
         EventHelper.on('ctrl', () => this.setIsMassEditSelectionAllowed(true));
         EventHelper.on('shift', () => this.setIsMassEditSelectionAllowed(true));
         EventHelper.on('keyUp', () => this.setIsMassEditSelectionAllowed(false));
-    }
+    };
 
     @computed
     get isMassEditSelectionEnabled() {
@@ -37,13 +39,13 @@ class RoutePathLinkMassEditStore {
         currentIndex > -1
             ? this._selectedMassEditRoutePathLinks.splice(currentIndex, 1)
             : (this._selectedMassEditRoutePathLinks = this._selectedMassEditRoutePathLinks.concat([
-                  routePathLink
+                  routePathLink,
               ]));
     };
 
     public getSelectedRoutePathLinkIndex = (routePathLink: IRoutePathLink) => {
         return this._selectedMassEditRoutePathLinks.findIndex(
-            rpLink =>
+            (rpLink) =>
                 rpLink.startNode.id === routePathLink.startNode.id &&
                 rpLink.endNode.id === routePathLink.endNode.id
         );

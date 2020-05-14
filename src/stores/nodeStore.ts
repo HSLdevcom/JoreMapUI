@@ -52,7 +52,9 @@ class NodeStore {
     private _nodeValidationStore: ValidationStore<INode, INodeValidationModel>;
     private _stopValidationStore: ValidationStore<IStop, IStopValidationModel>;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._links = [];
         this._node = null;
         this._oldNode = null;
@@ -77,7 +79,7 @@ class NodeStore {
             () => this.onStopAreasChange()
         );
         reaction(() => this._isEditingDisabled, this.onChangeIsEditingDisabled);
-    }
+    };
 
     @computed
     get links() {

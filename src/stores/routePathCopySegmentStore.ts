@@ -15,7 +15,9 @@ class RoutePathCopySegmentStore {
     @observable private _setNodeType: setNodeType;
     @observable private _areNodePositionsValid: boolean;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._isLoading = true;
         this._startNode = null;
         this._endNode = null;
@@ -23,7 +25,7 @@ class RoutePathCopySegmentStore {
         this._highlightedRoutePath = null;
         this._setNodeType = 'startNode';
         this._areNodePositionsValid = true;
-    }
+    };
 
     @computed
     get isLoading(): boolean {

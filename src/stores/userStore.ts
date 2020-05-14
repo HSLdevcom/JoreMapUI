@@ -5,10 +5,12 @@ import LocalStorageHelper from '~/helpers/LocalStorageHelper';
 class UserStore {
     @observable private _userTransitType: TransitType;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         const savedUserTransitType = LocalStorageHelper.getItem('userTransitType');
         this._userTransitType = savedUserTransitType ? savedUserTransitType : TransitType.BUS;
-    }
+    };
 
     @computed
     get userTransitType() {

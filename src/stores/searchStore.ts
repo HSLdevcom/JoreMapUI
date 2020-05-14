@@ -8,19 +8,21 @@ class SearchStore {
     @observable private _isSearchingForNodes: boolean;
     @observable private _isSearchDisabled: boolean;
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._searchInput = '';
         this._selectedTransitTypes = [
             TransitType.BUS,
             TransitType.FERRY,
             TransitType.SUBWAY,
             TransitType.TRAIN,
-            TransitType.TRAM
+            TransitType.TRAM,
         ];
         this._isSearchingForLines = true;
         this._isSearchingForNodes = false;
         this._isSearchDisabled = false;
-    }
+    };
 
     @computed
     get searchInput(): string {
@@ -67,7 +69,7 @@ class SearchStore {
     @action
     public toggleTransitType = (type: TransitType) => {
         if (this._selectedTransitTypes.includes(type)) {
-            this._selectedTransitTypes = this._selectedTransitTypes.filter(t => t !== type);
+            this._selectedTransitTypes = this._selectedTransitTypes.filter((t) => t !== type);
         } else {
             // Need to do concat (instead of push) to trigger observable reaction
             this._selectedTransitTypes = this._selectedTransitTypes.concat(type);

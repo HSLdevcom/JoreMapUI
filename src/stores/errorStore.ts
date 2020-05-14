@@ -5,9 +5,11 @@ import IError from '~/models/IError';
 class ErrorStore {
     @observable private _errors: string[];
 
-    constructor() {
+    // Constructor
+    @action
+    public initialize = () => {
         this._errors = [];
-    }
+    };
 
     @computed
     get latestError() {
