@@ -157,12 +157,12 @@ class RoutePathView extends React.Component<IRoutePathViewProps, IRoutePathViewS
                     routeId,
                     line.transitType!
                 );
-                this.props.routePathStore!.init({
+                this.props.routePathStore!.activate({
                     routePath,
                     isNewRoutePath: this.props.isNewRoutePath,
                 });
             } else {
-                this.props.routePathStore!.init({
+                this.props.routePathStore!.activate({
                     routePath: RoutePathFactory.createNewRoutePathFromOld(
                         this.props.routePathStore!.routePath!
                     ),
@@ -227,7 +227,10 @@ class RoutePathView extends React.Component<IRoutePathViewProps, IRoutePathViewS
         }
         await this.fetchViaNames(routePath);
         this.centerMapToRoutePath(routePath);
-        this.props.routePathStore!.init({ routePath, isNewRoutePath: this.props.isNewRoutePath });
+        this.props.routePathStore!.activate({
+            routePath,
+            isNewRoutePath: this.props.isNewRoutePath,
+        });
     };
 
     // fetch & set viaName properties to routePathLink

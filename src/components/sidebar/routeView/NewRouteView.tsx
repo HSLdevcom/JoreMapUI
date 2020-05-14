@@ -74,7 +74,7 @@ class NewRouteView extends React.Component<IRouteViewProps, IRouteViewState> {
         try {
             const lineId = navigator.getQueryParam(QueryParams.lineId);
             const newRoute = RouteFactory.createNewRoute(lineId);
-            this.props.routeStore!.init({ route: newRoute, isNewRoute: true });
+            this.props.routeStore!.activate({ route: newRoute, isNewRoute: true });
         } catch (e) {
             this.props.errorStore!.addError('Uuden reitin luonti epäonnistui', e);
         }

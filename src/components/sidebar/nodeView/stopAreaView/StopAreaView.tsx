@@ -114,7 +114,7 @@ class StopAreaView extends React.Component<IStopAreaViewProps, IStopAreaViewStat
             navigator.goTo({ link: homeViewLink });
             return;
         }
-        this.props.stopAreaStore!.init({
+        this.props.stopAreaStore!.activate({
             stopArea,
             isNewStopArea: false,
         });
@@ -125,7 +125,7 @@ class StopAreaView extends React.Component<IStopAreaViewProps, IStopAreaViewStat
         this.setState({ isLoading: true });
 
         const stopArea = StopAreaFactory.createNewStopArea();
-        this.props.stopAreaStore!.init({
+        this.props.stopAreaStore!.activate({
             stopArea,
             isNewStopArea: true,
         });

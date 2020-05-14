@@ -76,7 +76,7 @@ class LineStore {
     }
 
     @action
-    public init = ({ line, isNewLine }: { line: ILine; isNewLine: boolean }) => {
+    public activate = ({ line, isNewLine }: { line: ILine; isNewLine: boolean }) => {
         this._line = line;
         this._isNewLine = isNewLine;
         this.setOldLine(this._line);
@@ -99,7 +99,7 @@ class LineStore {
             },
         };
 
-        this._validationStore.init(line, lineValidationModel, customValidatorMap);
+        this._validationStore.activate(line, lineValidationModel, customValidatorMap);
     };
 
     @action
@@ -143,7 +143,7 @@ class LineStore {
     @action
     public resetChanges = () => {
         if (this._oldline) {
-            this.init({ line: this._oldline, isNewLine: this._isNewLine });
+            this.activate({ line: this._oldline, isNewLine: this._isNewLine });
         }
     };
 

@@ -91,7 +91,7 @@ class LineView extends React.Component<ILineViewProps, ILineViewState> {
     private initNewLine = async () => {
         this._setState({ isLoading: true });
         const newLine = LineFactory.createNewLine();
-        this.props.lineStore!.init({ line: newLine, isNewLine: true });
+        this.props.lineStore!.activate({ line: newLine, isNewLine: true });
         this._setState({ isLoading: false });
     };
 
@@ -107,7 +107,7 @@ class LineView extends React.Component<ILineViewProps, ILineViewState> {
             return;
         }
         const { line, routes } = queryResult;
-        this.props.lineStore!.init({ line, isNewLine: false });
+        this.props.lineStore!.activate({ line, isNewLine: false });
         this.props.lineStore!.setRoutes(routes);
         this._setState({ isLoading: false });
     };

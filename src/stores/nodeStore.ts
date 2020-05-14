@@ -152,7 +152,7 @@ class NodeStore {
     }
 
     @action
-    public init = ({
+    public activate = ({
         node,
         links,
         isNewNode,
@@ -239,9 +239,9 @@ class NodeStore {
         const _nodeValidationModel = this.isNodeIdEditable
             ? nodeIdEditingValidationModel
             : nodeValidationModel;
-        this._nodeValidationStore.init(node, _nodeValidationModel, customValidatorMap);
+        this._nodeValidationStore.activate(node, _nodeValidationModel, customValidatorMap);
         if (node.stop) {
-            this._stopValidationStore.init(node.stop, stopValidationModel);
+            this._stopValidationStore.activate(node.stop, stopValidationModel);
         }
     };
 
@@ -403,7 +403,7 @@ class NodeStore {
         if (this._node!.type === NodeType.STOP && !this._node!.stop) {
             const stop = NodeStopFactory.createNewStop();
             this._node!.stop = stop;
-            this._stopValidationStore.init(stop, stopValidationModel);
+            this._stopValidationStore.activate(stop, stopValidationModel);
         } else {
             // Only node which type is stop has measurementType and measurementDate, remove them if type is not stop
             this.updateNodeProperty('measurementType', '');
@@ -492,7 +492,7 @@ class NodeStore {
     @action
     public resetChanges = () => {
         if (this._oldNode) {
-            this.init({ node: this._oldNode, links: this._oldLinks, isNewNode: false });
+            this.activate({ node: this._oldNode, links: this._oldLinks, isNewNode: false });
         }
     };
 

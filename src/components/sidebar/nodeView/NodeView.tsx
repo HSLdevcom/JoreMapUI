@@ -107,7 +107,7 @@ class NodeView extends React.Component<INodeViewProps, INodeViewState> {
             const node = NodeFactory.createNewNode(coordinate);
             this.centerMapToNode(node, []);
             node.id = await this.fetchNodeId(node);
-            this.props.nodeStore!.init({ node, links: [], isNewNode: true });
+            this.props.nodeStore!.activate({ node, links: [], isNewNode: true });
             this.updateSelectedStopAreaId();
         };
 
@@ -170,7 +170,7 @@ class NodeView extends React.Component<INodeViewProps, INodeViewState> {
 
         this.props.mapStore!.setSelectedNodeId(node.id);
         this.centerMapToNode(node, links);
-        this.props.nodeStore!.init({
+        this.props.nodeStore!.activate({
             node,
             links,
             oldNode,

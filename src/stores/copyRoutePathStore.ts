@@ -50,7 +50,7 @@ class CopyRoutePathStore {
     }
 
     @action
-    public init = ({
+    public activate = ({
         lineId,
         routeId,
         transitType,

@@ -161,7 +161,7 @@ class RoutePathStore {
     }
 
     @action
-    public init = ({
+    public activate = ({
         routePath,
         isNewRoutePath,
     }: {
@@ -255,7 +255,11 @@ class RoutePathStore {
                 dependentProperties: ['routePathPrimaryKey'],
             },
         };
-        this._validationStore.init(this._routePath, routePathValidationModel, customValidatorMap);
+        this._validationStore.activate(
+            this._routePath,
+            routePathValidationModel,
+            customValidatorMap
+        );
     };
 
     @action
@@ -532,7 +536,7 @@ class RoutePathStore {
     @action
     public resetChanges = () => {
         if (this._oldRoutePath) {
-            this.init({ routePath: this._oldRoutePath, isNewRoutePath: this._isNewRoutePath });
+            this.activate({ routePath: this._oldRoutePath, isNewRoutePath: this._isNewRoutePath });
         }
         RoutePathCopySegmentStore.clear();
     };
@@ -621,7 +625,7 @@ class RoutePathStore {
         this._routePathLinkValidationStoreMap.set(routePathLink.id, new ValidationStore());
         this._routePathLinkValidationStoreMap
             .get(routePathLink.id)!
-            .init(routePathLink, routePathLinkValidationModel);
+            .activate(routePathLink, routePathLinkValidationModel);
     };
 
     private recalculateOrderNumbers = () => {

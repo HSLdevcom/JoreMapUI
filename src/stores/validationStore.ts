@@ -14,7 +14,7 @@ interface ICustomValidatorMap {
 
 /**
  * Generic validation store to be used by other stores.
- * Call init() when validationObject changes
+ * Call activate() when validationObject changes
  * Call updateProperty() always when validationObject's value is changed
  * Call validateAllProperties() when isEditingDisabled of a View is changed
  * Call clear() to release memory when a store using validation store is cleared
@@ -32,7 +32,7 @@ class ValidationStore<ValidationObject, ValidationModel> {
     @action
     public initialize = () => {};
 
-    public init = (
+    public activate = (
         validationObject: ValidationObject,
         validationModel: ValidationModel,
         customValidatorsMap?: ICustomValidatorMap

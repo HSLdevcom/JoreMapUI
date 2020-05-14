@@ -73,7 +73,7 @@ class StopAreaStore {
     }
 
     @action
-    public init = ({
+    public activate = ({
         stopArea,
         isNewStopArea,
     }: {
@@ -89,7 +89,7 @@ class StopAreaStore {
         this._oldStopArea = _.cloneDeep(oldStopArea);
 
         this._isEditingDisabled = !isNewStopArea;
-        this._validationStore.init(this._stopArea, stopAreaValidationModel);
+        this._validationStore.activate(this._stopArea, stopAreaValidationModel);
     };
 
     @action
@@ -128,7 +128,7 @@ class StopAreaStore {
     @action
     public resetChanges = () => {
         if (this._oldStopArea) {
-            this.init({ stopArea: this._oldStopArea, isNewStopArea: false });
+            this.activate({ stopArea: this._oldStopArea, isNewStopArea: false });
         }
     };
 

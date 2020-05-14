@@ -90,7 +90,7 @@ class LinkStore {
     }
 
     @action
-    public init = ({
+    public activate = ({
         link,
         nodes,
         isNewLink,
@@ -112,7 +112,7 @@ class LinkStore {
 
         this._isEditingDisabled = !isNewLink;
 
-        this._validationStore.init(newLink, linkValidationModel);
+        this._validationStore.activate(newLink, linkValidationModel);
     };
 
     @action
@@ -195,7 +195,7 @@ class LinkStore {
     @action
     public resetChanges = () => {
         if (this._oldLink) {
-            this.init({ link: this._oldLink, nodes: this._nodes, isNewLink: false });
+            this.activate({ link: this._oldLink, nodes: this._nodes, isNewLink: false });
         }
     };
 

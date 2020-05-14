@@ -383,7 +383,7 @@ class RoutePathListTab extends React.Component<IRoutePathListTabProps, IRoutePat
 
     private openCopyRoutePathView = () => () => {
         const { lineId, routeId, transitType } = this.props;
-        this.props.copyRoutePathStore!.init({ lineId, routeId, transitType });
+        this.props.copyRoutePathStore!.activate({ lineId, routeId, transitType });
     };
 
     render() {

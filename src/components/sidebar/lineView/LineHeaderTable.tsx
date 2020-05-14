@@ -82,7 +82,7 @@ class LineHeaderTable extends React.Component<ILineHeaderListProps, ILineHeaderS
             this.props.lineId
         );
         if (lineHeaders) {
-            this.props.lineHeaderMassEditStore!.init(lineHeaders);
+            this.props.lineHeaderMassEditStore!.activate(lineHeaders);
         }
         this._setState({
             lineHeaders,

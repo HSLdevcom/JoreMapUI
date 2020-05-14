@@ -73,7 +73,7 @@ class RouteStore {
     }
 
     @action
-    public init = ({ route, isNewRoute }: { route: IRoute; isNewRoute: boolean }) => {
+    public activate = ({ route, isNewRoute }: { route: IRoute; isNewRoute: boolean }) => {
         this._route = _.cloneDeep(route);
         this._oldRoute = _.cloneDeep(route);
         this._validationStore.clear();
@@ -96,7 +96,7 @@ class RouteStore {
                 ],
             },
         };
-        this._validationStore.init(this._route, routeValidationModel, customValidatorMap);
+        this._validationStore.activate(this._route, routeValidationModel, customValidatorMap);
     };
 
     @action

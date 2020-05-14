@@ -101,7 +101,7 @@ class LinkView extends React.Component<ILinkViewProps, ILinkViewState> {
                 return;
             }
             this.centerMapToLink(link);
-            this.props.linkStore!.init({
+            this.props.linkStore!.activate({
                 link,
                 nodes: [link.startNode, link.endNode],
                 isNewLink: false,
@@ -148,7 +148,7 @@ class LinkView extends React.Component<ILinkViewProps, ILinkViewState> {
     private createNewLink = (startNode: INode, endNode: INode) => {
         const link = LinkFactory.createNewLink(startNode, endNode);
         this.centerMapToLink(link);
-        this.props.linkStore!.init({ link, nodes: [startNode, endNode], isNewLink: true });
+        this.props.linkStore!.activate({ link, nodes: [startNode, endNode], isNewLink: true });
     };
 
     private centerMapToLink = (link: ILink) => {

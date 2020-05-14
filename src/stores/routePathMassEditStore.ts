@@ -90,7 +90,7 @@ class RoutePathMassEditStore {
     };
 
     @action
-    public init = ({ routePaths }: { routePaths: IRoutePath[] }) => {
+    public activate = ({ routePaths }: { routePaths: IRoutePath[] }) => {
         const massEditRoutePaths: IMassEditRoutePath[] = [];
         _.cloneDeep(routePaths).forEach((rp: IRoutePath) => {
             massEditRoutePaths.push({

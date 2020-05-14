@@ -81,7 +81,7 @@ class LineHeaderMassEditStore {
     }
 
     @action
-    public init = (lineHeaders: ILineHeader[]) => {
+    public activate = (lineHeaders: ILineHeader[]) => {
         this.clear();
 
         const _lineHeaders = lineHeaders.map((lineHeader: ILineHeader) => {
@@ -216,7 +216,7 @@ class LineHeaderMassEditStore {
     @action
     public resetChanges = () => {
         if (this._oldlineHeaders) {
-            this.init(this._oldlineHeaders);
+            this.activate(this._oldlineHeaders);
         }
     };
 

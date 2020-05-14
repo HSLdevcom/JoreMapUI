@@ -38,7 +38,7 @@ class RoutePathLayerStore {
     }
 
     @action
-    public init = ({ routePaths }: { routePaths: IRoutePath[] }) => {
+    public activate = ({ routePaths }: { routePaths: IRoutePath[] }) => {
         this.addRoutePaths({ routePaths });
     };
 
