@@ -35,7 +35,7 @@ TOOL_LIST.forEach((tool) => {
 const DEFAULT_DISABLED_TOOLS = [ToolbarToolType.Print];
 
 class ToolbarStore {
-    @observable private _selectedTool: BaseTool | null;
+    @observable private _selectedTool: BaseTool;
     @observable private _toolPhase: string | null; // This property would be better inside each tool but then mobx listeners don't react to it's changes. TODO: find a way to achieve this.
     @observable private _disabledTools: ToolbarToolType[];
     @observable private _shouldShowEntityOpenPrompt: boolean;
@@ -48,7 +48,7 @@ class ToolbarStore {
     }
 
     @computed
-    get selectedTool(): BaseTool | null {
+    get selectedTool(): BaseTool {
         return this._selectedTool;
     }
 
@@ -161,7 +161,7 @@ class ToolbarStore {
     };
 
     public isSelected = (tool: ToolbarToolType): boolean => {
-        return Boolean(this._selectedTool && this._selectedTool.toolType === tool);
+        return Boolean(this._selectedTool.toolType === tool);
     };
 
     public isDisabled = (tool: ToolbarToolType): boolean => {

@@ -121,6 +121,8 @@ class RoutePathView extends React.Component<IRoutePathViewProps, IRoutePathViewS
     };
 
     private onRoutePathNodeClick = (event: CustomEvent) => {
+        if (!this.props.toolbarStore!.isSelected(ToolbarToolType.SelectNetworkEntity)) return;
+
         const params: IRoutePathNodeClickParams = event.detail;
         this.props.routePathLayerStore?.extendedListItemId === params.node.internalId
             ? this.props.routePathLayerStore!.setExtendedListItemId(null)
@@ -128,6 +130,8 @@ class RoutePathView extends React.Component<IRoutePathViewProps, IRoutePathViewS
     };
 
     private onRoutePathLinkClick = (event: CustomEvent) => {
+        if (!this.props.toolbarStore!.isSelected(ToolbarToolType.SelectNetworkEntity)) return;
+
         const params: IRoutePathLinkClickParams = event.detail;
         this.props.routePathLayerStore!.extendedListItemId === params.routePathLinkId
             ? this.props.routePathLayerStore!.setExtendedListItemId(null)
